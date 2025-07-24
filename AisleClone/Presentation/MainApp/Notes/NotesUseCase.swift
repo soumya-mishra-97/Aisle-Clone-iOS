@@ -8,15 +8,16 @@
 import Foundation
 import Combine
 
-class NotesUseCase {
-    func fetchNotes(token: String) -> AnyPublisher<[Profile], Error> {
+protocol NotesUseCaseProtocol {
+    func fetchNotes(token: String) -> AnyPublisher<NoteResponse, Error>
+}
+
+class NotesUseCase: NotesUseCaseProtocol {
+    func fetchNotes(token: String) -> AnyPublisher<NoteResponse, Error> {
         let headers = ["Authorization": token]
         
         return APIService.shared.get(from: Endpoints.notes, headers: headers)
             .decode(type: NoteResponse.self, decoder: JSONDecoder())
-            .tryMap { response in
-                return response.invites.profiles
-            }
             .eraseToAnyPublisher()
     }
 }

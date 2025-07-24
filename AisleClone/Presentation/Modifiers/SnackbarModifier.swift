@@ -10,20 +10,18 @@ import SwiftUI
 struct SnackbarModifier: ViewModifier {
     let message: String
     @Binding var isVisible: Bool
-
+    
     func body(content: Content) -> some View {
         ZStack {
             content
-
+            
             if isVisible {
                 VStack {
                     Spacer()
                     Text(message)
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
-                        .background(Color.red.opacity(0.9))
+                        .captionStyle(size: 11,weight: .semibold, color: .white)
+                        .padding([.horizontal, .vertical], 12)
+                        .background(Color.black.opacity(0.8))
                         .cornerRadius(8)
                         .padding(.bottom, 30)
                         .transition(.move(edge: .bottom).combined(with: .opacity))

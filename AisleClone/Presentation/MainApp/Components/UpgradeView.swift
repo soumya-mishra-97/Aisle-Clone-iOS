@@ -13,21 +13,19 @@ struct UpgradeView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Interested In You")
                     .headingStyle(size: 22, weight: .bold)
-
+                
                 Text("Premium members can\nview all their likes at once")
                     .foregroundColor(.gray)
-                    .captionStyle(size: 15, weight: .regular)
+                    .subHeadingStyle(size: 15, weight: .medium)
             }
-
+            
             Spacer()
-
+            
             Button(action: {}) {
                 Text("Upgrade")
-                    .font(.system(size: 16, weight: .bold))
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
+                    .headingStyle(size: 15, weight: .semibold)
+                    .frame(width: 100, height: 50)
                     .background(Color(hex: "#F9CB10"))
-                    .foregroundColor(.black)
                     .cornerRadius(25)
             }
         }

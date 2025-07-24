@@ -13,17 +13,26 @@ struct PhoneNumberView: View {
     @State private var showSnackbar = false
     @FocusState private var isPhoneFieldFocused: Bool
     
+    init() {
+        for family in UIFont.familyNames {
+            print("Family: \(family)")
+            for name in UIFont.fontNames(forFamilyName: family) {
+                print("   - \(name)")
+            }
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Get OTP")
-                .headingStyle(size: 18, weight: .medium)
+                .headingStyle(size: 18, weight: .regular)
             
             Text("Enter Your\nPhone Number")
                 .headingStyle(size: 30, weight: .bold)
             
             HStack(spacing: 12) {
                 Text("+91")
-                    .frame(width: 60)
+                    .frame(width: 64, height: 36)
                     .inputStyle()
                 
                 TextField("9999999999", text: $viewModel.phoneNumber)
@@ -35,7 +44,7 @@ struct PhoneNumberView: View {
                             isPhoneFieldFocused = false
                         }
                     }
-                    .frame(width: 100)
+                    .frame(width: 145, height: 36)
                     .inputStyle()
             }
             
@@ -56,8 +65,8 @@ struct PhoneNumberView: View {
                 }
             }) {
                 Text("Continue")
-                    .headingStyle(size: 16, weight: .medium)
-                    .frame(width: 110, height: 50)
+                    .headingStyle(size: 14, weight: .semibold)
+                    .frame(width: 96, height: 40)
                     .background(Color(hex: "#F9CB10"))
                     .cornerRadius(25)
             }

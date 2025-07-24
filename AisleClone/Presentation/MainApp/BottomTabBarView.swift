@@ -14,7 +14,7 @@ enum BottomTab: Int {
 struct BottomTabBarView: View {
     @State private var selectedTab: BottomTab = .notes
     let token: String
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             Group {
@@ -23,7 +23,7 @@ struct BottomTabBarView: View {
                     Text("Dashboard View")
                         .headingStyle(size: 24, weight: .bold)
                 case .notes:
-                    NotesView()
+                    NotesView(token: token)
                 case .matches:
                     Text("Matches View")
                         .headingStyle(size: 24, weight: .bold)
@@ -34,7 +34,7 @@ struct BottomTabBarView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white)
-
+            
             HStack(spacing: 0) {
                 tabButton(tab: .home, icon: "square.grid.2x2.fill", label: "Discover")
                 tabButton(tab: .notes, icon: "envelope.fill", label: "Notes", badge: "9")
@@ -47,7 +47,7 @@ struct BottomTabBarView: View {
         .ignoresSafeArea(.all, edges: .bottom)
         .navigationBarBackButtonHidden()
     }
-
+    
     @ViewBuilder
     private func tabButton(tab: BottomTab, icon: String, label: String, badge: String? = nil) -> some View {
         Button(action: {
@@ -58,21 +58,21 @@ struct BottomTabBarView: View {
                     Image(systemName: icon)
                         .font(.system(size: 20, weight: .medium))
                         .foregroundColor(selectedTab == tab ? .black : .gray)
-
+                    
                     if let badge = badge {
                         BadgeView(countText: badge)
                             .offset(badgeOffset(for: tab))
                     }
                 }
-
+                
                 Text(label)
-                    .captionStyle(size: 11, weight: .semibold)
+                    .callOutStyle(size: 12, weight: .medium, color: Color(hex: "#9B9B9B"))
                     .foregroundColor(selectedTab == tab ? .black : .gray)
             }
             .frame(maxWidth: .infinity)
         }
     }
-
+    
     private func badgeOffset(for tab: BottomTab) -> CGSize {
         switch tab {
         case .notes:
@@ -87,10 +87,10 @@ struct BottomTabBarView: View {
 
 struct BadgeView: View {
     var countText: String
-
+    
     var body: some View {
         Text(countText)
-            .captionStyle(size: 11, weight: .bold,color: Color.white)
+            .callOutStyle(size: 11, weight: .bold, color: Color.white)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
             .background(Color(hex: "#8C5CFB"))
@@ -102,5 +102,5 @@ struct BadgeView: View {
 }
 
 #Preview {
-    BottomTabBarView(token: "demo-token-123")
+    BottomTabBarView(token: "32c7794d2e6a1f7316ef35aa1eb34541")
 }

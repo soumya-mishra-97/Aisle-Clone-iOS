@@ -49,43 +49,39 @@ class OTPViewModel: ObservableObject {
             return
         }
         
-        isOTPVerified = true
-        token = "mock_token_123"
-        completion(true)
         
-        /// API Implementation (commented for demo/test mode)
-        /*
-         isLoading = true
-         errorMessage = nil
-         
-         let parameters = [
-         "number": "+91\(number)",
-         "otp": otp
-         ]
-         
-         APIService.shared.post(to: Endpoints.verifyOTP, parameters: parameters)
-         .decode(type: OTPResponse.self, decoder: JSONDecoder())
-         .receive(on: DispatchQueue.main)
-         .sink { [weak self] completionResult in
-         self?.isLoading = false
-         switch completionResult {
-         case .failure(let error):
-         self?.errorMessage = error.localizedDescription
-         completion(false)
-         case .finished:
-         break
-         }
-         } receiveValue: { [weak self] response in
-         if let token = response.token {
-         self?.token = token
-         self?.isOTPVerified = true
-         completion(true)
-         } else {
-         self?.errorMessage = "Invalid OTP, please try again"
-         completion(false)
-         }
-         }
-         .store(in: &cancellables)
-         */
+        
+        isLoading = true
+        errorMessage = nil
+        
+        let parameters = [
+            "number": "+91\(number)",
+            "otp": otp
+        ]
+        
+        APIService.shared.post(to: Endpoints.verifyOTP, parameters: parameters)
+            .decode(type: OTPResponse.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completionResult in
+                self?.isLoading = false
+                switch completionResult {
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                    completion(false)
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] response in
+                if let token = response.token {
+                    self?.token = token
+                    self?.isOTPVerified = true
+                    completion(true)
+                } else {
+                    self?.errorMessage = "Invalid OTP, please try again"
+                    completion(false)
+                }
+            }
+            .store(in: &cancellables)
+        
     }
 }

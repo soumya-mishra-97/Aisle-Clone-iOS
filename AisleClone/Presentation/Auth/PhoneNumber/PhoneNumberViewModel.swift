@@ -28,32 +28,30 @@ class PhoneNumberViewModel: ObservableObject {
             return
         }
         
-        completion(true)
         
-        /// API Implementation (commented for demo/test mode)
-        /*
-         isLoading = true
-         errorMessage = nil
-         
-         let params = ["number": "+91\(phoneNumber)"]
-         APIService.shared.post(to: Endpoints.phoneNumberLogin, parameters: params)
-         .decode(type: PhoneLoginResponse.self, decoder: JSONDecoder())
-         .receive(on: DispatchQueue.main)
-         .sink { [weak self] completionResult in
-         self?.isLoading = false
-         if case .failure(let error) = completionResult {
-         self?.errorMessage = error.localizedDescription
-         completion(false)
-         }
-         } receiveValue: { [weak self] response in
-         if response.status == true {
-         completion(true)
-         } else {
-         self?.errorMessage = "Number isn't registered. Try with a registered number."
-         completion(false)
-         }
-         }
-         .store(in: &cancellables)
-         */
+        
+        isLoading = true
+        errorMessage = nil
+        
+        let params = ["number": "+91\(phoneNumber)"]
+        APIService.shared.post(to: Endpoints.phoneNumberLogin, parameters: params)
+            .decode(type: PhoneLoginResponse.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completionResult in
+                self?.isLoading = false
+                if case .failure(let error) = completionResult {
+                    self?.errorMessage = error.localizedDescription
+                    completion(false)
+                }
+            } receiveValue: { [weak self] response in
+                if response.status == true {
+                    completion(true)
+                } else {
+                    self?.errorMessage = "Number isn't registered. Try with a registered number."
+                    completion(false)
+                }
+            }
+            .store(in: &cancellables)
+        
     }
 }

@@ -14,27 +14,26 @@ struct OTPView: View {
     @State private var showNotes = false
     @State private var showSnackbar = false
     @State private var selectedTab: BottomTab = .home
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text("+91 \(number)")
-                    .headingStyle(size: 18, weight: .medium)
-
+                    .headingStyle(size: 18, weight: .regular)
+                
                 Button(action: {
-                   print("Edit")
+                    print("Edit")
                 }) {
                     Image(systemName: "square.and.pencil")
                         .resizable()
-                        .bold()
                         .frame(width: 16, height: 16)
                         .foregroundColor(.black)
                 }
             }
-
+            
             Text("Enter the\nOTP")
                 .headingStyle(size: 30, weight: .bold)
-
+            
             TextField("9999", text: $viewModel.otp)
                 .focused($isFocused)
                 .onChange(of: viewModel.otp) { _, newValue in
@@ -44,10 +43,10 @@ struct OTPView: View {
                         isFocused = false
                     }
                 }
-                .frame(width: 78)
+                .frame(width: 78, height: 36)
                 .otpInputStyle()
                 .keyboardType(.numberPad)
-
+            
             HStack {
                 Button(action: {
                     viewModel.verifyOTP(for: number) { success in
@@ -66,22 +65,22 @@ struct OTPView: View {
                     }
                 }) {
                     Text("Continue")
-                        .headingStyle(size: 16, weight: .medium)
-                        .frame(width: 110, height: 50)
+                        .headingStyle(size: 14, weight: .semibold)
+                        .frame(width: 96, height: 40)
                         .background(Color(hex: "#F9CB10"))
                         .cornerRadius(25)
                 }
-
+                
                 Text(viewModel.timerString)
                     .captionBoldStyle()
-                    .foregroundColor(.gray)
+                    .padding(.leading, 4)
             }
-
+            
             Spacer()
             
-            .navigationDestination(isPresented: $showNotes) {
-                BottomTabBarView(token: viewModel.token ?? "null")
-            }
+                .navigationDestination(isPresented: $showNotes) {
+                    BottomTabBarView(token: viewModel.token ?? "null")
+                }
         }
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)

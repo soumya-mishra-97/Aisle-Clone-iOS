@@ -8,35 +8,34 @@
 import SwiftUI
 
 struct BlurredProfileView: View {
-    var imageName: String
+    var imageURL: String
     var name: String
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 160, height: 220)
+            ProfileImageView(imageURL: imageURL)
+                .frame(width: 168, height: 255)
                 .blur(radius: 8)
                 .overlay(
-                    Color.black.opacity(0.3)
+                    Color.black.opacity(0.4)
                 )
                 .cornerRadius(20)
             
             Text(name)
                 .foregroundColor(.white)
-                .headingStyle(size: 20, weight: .black)
-                .padding(.leading, 16)
-                .padding(.bottom, 16)
+                .titleStyle(size: 22, weight: .bold)
+                .padding([.leading, .bottom], 16)
         }
-        .frame(width: 160, height: 220)
     }
 }
 
 struct BlurredProfileView_Preview: PreviewProvider {
     static var previews: some View {
-        BlurredProfileView(imageName: "photo-1", name: "Teena")
-            .previewLayout(.sizeThatFits)
-            .padding()
+        BlurredProfileView(
+            imageURL: "https://testimages.aisle.co/dd510d5260eeebcdc7d7fc752c598c39728894004.png",
+            name: "Ajith"
+        )
+        .previewLayout(.sizeThatFits)
+        .padding()
     }
 }
